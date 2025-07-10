@@ -1,23 +1,28 @@
-<!-- 🎁 Coupon Popup HTML: Step-by-step version -->
+<!-- 🎁 Coupon Popup HTML: Step-by-step version with styled button and WhatsApp international input -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput.min.js"></script>
+
 <div id="coupon-popup" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);">
   <div style="max-width: 400px; margin: 10% auto; background: #fff; padding: 30px; border-radius: 12px; font-family: sans-serif;">
     <form id="coupon-form">
       <div class="step" id="step-1">
         <h2>🎁 Step 1: What's your email address?</h2>
-        <input type="email" name="email" required placeholder="example@email.com" style="width: 100%; padding: 8px; margin: 20px 0;">
-        <button type="button" onclick="nextStep(1)" style="width: 100%; padding: 12px;">Next</button>
+        <input type="email" name="email" required placeholder="example@email.com" style="width: 100%; padding: 10px; font-size: 16px; margin: 20px 0; border: 1px solid #ccc; border-radius: 6px;">
+        <button type="button" onclick="nextStep(1)" class="next-button">Next</button>
       </div>
 
       <div class="step" id="step-2" style="display: none;">
-        <h2>📱 Step 2: Your WhatsApp number (with country code)</h2>
-        <input type="tel" name="whatsapp" required placeholder="e.g. +1 1234567890" style="width: 100%; padding: 8px; margin: 20px 0;">
-        <button type="button" onclick="prevStep(1)" style="margin-right: 10px;">Back</button>
-        <button type="button" onclick="nextStep(2)">Next</button>
+        <h2>📱 Step 2: Your WhatsApp number</h2>
+        <div style="margin: 20px 0;">
+          <input type="tel" id="whatsapp" name="whatsapp" required class="full-width-input">
+        </div>
+        <button type="button" onclick="prevStep(2)" class="back-button">Back</button>
+        <button type="button" onclick="nextStep(2)" class="next-button">Next</button>
       </div>
 
       <div class="step" id="step-3" style="display: none;">
         <h2>💇‍♀️ Step 3A: Your Business Type</h2>
-        <select name="user_type" required style="width: 100%; padding: 8px; margin: 20px 0;">
+        <select name="user_type" required style="width: 100%; padding: 10px; font-size: 16px; margin: 20px 0; border: 1px solid #ccc; border-radius: 6px;">
           <option value="">Select your type</option>
           <option value="individual">Individual User</option>
           <option value="salon">Salon Owner</option>
@@ -26,15 +31,15 @@
           <option value="offline">Offline Store</option>
           <option value="wholesaler">Wholesaler & Distributor</option>
         </select>
-        <button type="button" onclick="prevStep(2)" style="margin-right: 10px;">Back</button>
-        <button type="button" onclick="nextStep(3)">Next</button>
+        <button type="button" onclick="prevStep(3)" class="back-button">Back</button>
+        <button type="button" onclick="nextStep(3)" class="next-button">Next</button>
       </div>
 
       <div class="step" id="step-4" style="display: none;">
         <h2>🧠 Step 3B: Experience in Hair Replacement Service</h2>
-        <input type="number" name="experience_years" min="0" max="50" placeholder="How many years?" style="width: 100%; padding: 8px; margin: 20px 0;">
-        <button type="button" onclick="prevStep(3)" style="margin-right: 10px;">Back</button>
-        <button type="submit">Get My Coupon</button>
+        <input type="number" name="experience_years" min="0" max="50" placeholder="How many years?" style="width: 100%; padding: 10px; font-size: 16px; margin: 20px 0; border: 1px solid #ccc; border-radius: 6px;">
+        <button type="button" onclick="prevStep(4)" class="back-button">Back</button>
+        <button type="submit" class="submit-button">Unlock Deals</button>
       </div>
     </form>
 
@@ -42,20 +47,90 @@
   </div>
 </div>
 
+<style>
+  .full-width-input {
+    width: 100% !important;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+  .iti {
+    width: 100%;
+  }
+  .next-button, .back-button, .submit-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .next-button {
+    background-color: #111;
+    color: #fff;
+  }
+  .next-button:hover {
+    background-color: #333;
+  }
+  .back-button {
+    background-color: #f0f0f0;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  .back-button:hover {
+    background-color: #e0e0e0;
+  }
+  .submit-button {
+    background-color: #000;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  }
+  .submit-button:hover {
+    background-color: #1a1a1a;
+  }
+</style>
+
 <script>
   function nextStep(current) {
-    document.getElementById("step-" + current).style.display = "none";
-    document.getElementById("step-" + (current + 1)).style.display = "block";
+    const currentStep = document.getElementById("step-" + current);
+    const nextStep = document.getElementById("step-" + (current + 1));
+    if (currentStep && nextStep) {
+      currentStep.style.display = "none";
+      nextStep.style.display = "block";
+    }
   }
   function prevStep(current) {
-    document.getElementById("step-" + current).style.display = "none";
-    document.getElementById("step-" + (current - 1)).style.display = "block";
+    const currentStep = document.getElementById("step-" + current);
+    const prevStep = document.getElementById("step-" + (current - 1));
+    if (currentStep && prevStep) {
+      currentStep.style.display = "none";
+      prevStep.style.display = "block";
+    }
   }
 
   window.onload = function() {
     setTimeout(function() {
       document.getElementById("coupon-popup").style.display = "block";
     }, 3000);
+
+    const input = document.querySelector("#whatsapp");
+    const iti = window.intlTelInput(input, {
+      initialCountry: "auto",
+      separateDialCode: true,
+      nationalMode: false,
+      geoIpLookup: function(success) {
+        fetch("https://ipapi.co/json")
+          .then(function(res) { return res.json(); })
+          .then(function(data) { success(data.country_code); })
+          .catch(function() { success("us"); });
+      },
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/utils.js"
+    });
 
     document.getElementById("coupon-form").onsubmit = function(e) {
       e.preventDefault();

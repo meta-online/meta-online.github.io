@@ -1,44 +1,61 @@
-<!-- 🎁 Coupon Popup HTML -->
+<!-- 🎁 Coupon Popup HTML: Step-by-step version -->
 <div id="coupon-popup" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6);">
   <div style="max-width: 400px; margin: 10% auto; background: #fff; padding: 30px; border-radius: 12px; font-family: sans-serif;">
-    <h2 style="text-align: center;">🎁 Answer 3 Quick Questions & Get a Special Coupon!</h2>
-
     <form id="coupon-form">
-      <label for="email"><strong>1. Your Email Address *</strong></label><br>
-      <input type="email" id="email" name="email" required placeholder="example@email.com" style="width: 100%; padding: 8px; margin: 10px 0;">
+      <div class="step" id="step-1">
+        <h2>🎁 Step 1: What's your email address?</h2>
+        <input type="email" name="email" required placeholder="example@email.com" style="width: 100%; padding: 8px; margin: 20px 0;">
+        <button type="button" onclick="nextStep(1)" style="width: 100%; padding: 12px;">Next</button>
+      </div>
 
-      <label for="whatsapp"><strong>2. Your WhatsApp Number (with country code) *</strong></label><br>
-      <input type="tel" id="whatsapp" name="whatsapp" required placeholder="e.g. +1 1234567890" style="width: 100%; padding: 8px; margin: 10px 0;">
+      <div class="step" id="step-2" style="display: none;">
+        <h2>📱 Step 2: Your WhatsApp number (with country code)</h2>
+        <input type="tel" name="whatsapp" required placeholder="e.g. +1 1234567890" style="width: 100%; padding: 8px; margin: 20px 0;">
+        <button type="button" onclick="prevStep(1)" style="margin-right: 10px;">Back</button>
+        <button type="button" onclick="nextStep(2)">Next</button>
+      </div>
 
-      <label><strong>3A. Your Business Type *</strong></label><br>
-      <select name="user_type" required style="width: 100%; padding: 8px; margin: 10px 0;">
-        <option value="">Select your type</option>
-        <option value="individual">Individual User</option>
-        <option value="salon">Salon Owner</option>
-        <option value="stylist">Hair Stylist</option>
-        <option value="online">Online Retailer</option>
-        <option value="offline">Offline Store</option>
-        <option value="wholesaler">Wholesaler & Distributor</option>
-      </select>
+      <div class="step" id="step-3" style="display: none;">
+        <h2>💇‍♀️ Step 3A: Your Business Type</h2>
+        <select name="user_type" required style="width: 100%; padding: 8px; margin: 20px 0;">
+          <option value="">Select your type</option>
+          <option value="individual">Individual User</option>
+          <option value="salon">Salon Owner</option>
+          <option value="stylist">Hair Stylist</option>
+          <option value="online">Online Retailer</option>
+          <option value="offline">Offline Store</option>
+          <option value="wholesaler">Wholesaler & Distributor</option>
+        </select>
+        <button type="button" onclick="prevStep(2)" style="margin-right: 10px;">Back</button>
+        <button type="button" onclick="nextStep(3)">Next</button>
+      </div>
 
-      <label><strong>3B. Have you used or sold wigs/hair systems before? *</strong></label><br>
-      <input type="radio" name="experience" value="yes" required> Yes<br>
-      <input type="radio" name="experience" value="no" required> No<br>
-
-      <br>
-      <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px;">Get My Coupon Now</button>
+      <div class="step" id="step-4" style="display: none;">
+        <h2>🧠 Step 3B: Experience in Hair Replacement Service</h2>
+        <input type="number" name="experience_years" min="0" max="50" placeholder="How many years?" style="width: 100%; padding: 8px; margin: 20px 0;">
+        <button type="button" onclick="prevStep(3)" style="margin-right: 10px;">Back</button>
+        <button type="submit">Get My Coupon</button>
+      </div>
     </form>
 
     <p style="margin-top: 15px; font-size: 12px; color: gray; text-align: center;">🔒 We respect your privacy. Your information will only be used to provide better service and exclusive offers.</p>
   </div>
 </div>
 
-<!-- Optional JS to trigger popup (e.g. after delay or scroll) -->
 <script>
+  function nextStep(current) {
+    document.getElementById("step-" + current).style.display = "none";
+    document.getElementById("step-" + (current + 1)).style.display = "block";
+  }
+  function prevStep(current) {
+    document.getElementById("step-" + current).style.display = "none";
+    document.getElementById("step-" + (current - 1)).style.display = "block";
+  }
+
   window.onload = function() {
     setTimeout(function() {
       document.getElementById("coupon-popup").style.display = "block";
-    }, 3000); // show after 3 seconds
+    }, 3000);
 
     document.getElementById("coupon-form").onsubmit = function(e) {
       e.preventDefault();
